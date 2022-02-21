@@ -58,29 +58,34 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = [
-        'fullName',
-    ];
+//    /**
+//     * The accessors to append to the model's array form.
+//     *
+//     * @var array
+//     */
+//    protected $appends = [
+//        'fullName',
+//    ];
 
     public function Accounts()
     {
         return $this->belongsToMany(Account::class)->using(AccountUser::class)->withTimestamps()->withPivot('role');
     }
 
-    /**
-     * Get User Full Name.
-     *
-     * @return  \Illuminate\Database\Eloquent\Casts\Attribute
-     */
-    public function fullName(): Attribute
+    public function accountUser()
     {
-        return new Attribute(
-            get: fn ($value) => ucfirst("{$this->first_name} {$this->last_name}"),
-        );
+        return $this->hasOne(AccountUser::class);
     }
+
+//    /**
+//     * Get User Full Name.
+//     *
+//     * @return  \Illuminate\Database\Eloquent\Casts\Attribute
+//     */
+//    public function fullName(): Attribute
+//    {
+//        return new Attribute(
+//            get: fn ($value) => ucfirst("{$this->first_name} {$this->last_name}"),
+//        );
+//    }
 }
